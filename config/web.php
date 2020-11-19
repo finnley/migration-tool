@@ -53,6 +53,11 @@ $config = [
         */
     ],
     'params' => $params,
+    'modules' => [
+        'notes' => [
+            'class' => 'app\modules\notes\Module',
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
