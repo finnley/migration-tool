@@ -101,3 +101,12 @@ campaign 模块创建数据库变更文件
 ```
 
 
+## 执行MySQL数据库变更
+
+```shell script
+全量执行数据库变更
+./yii migrate-module
+
+指定模块执行数据库变更文件
+./yii migrate-module --migrationPath=modules/notes/migrations --migration-namespaces=modules/notes/migrations
+```

@@ -25,35 +25,20 @@ class M201119055823CreateNoteCategoryTable extends Migration implements \app\com
      */
     public function safeUp()
     {
-        $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB COMMENT="Note 分类"';
+        $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB COMMENT="note 分类"';
         $this->createTable(self::TABLE_NAME, [
             //长度22，适当预留
             'uuid' => $this->char(36)->notNull()->comment('主键ID'),
             'category_name' => 'VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT "" COMMENT "分类名称"',
-            'start_time' => $this->integer(10)->unsigned()->defaultValue(0)->notNull()->comment('开始时间'),
-            'end_time' =>$this->integer(10)->unsigned()->defaultValue(0)->notNull()->comment(' 结束时间'),
-            'status' => $this->integer(10)->unsigned()->notNull()->defaultValue(0)
-                ->comment('状态，0-关闭 1-正常'),
-            'type' => $this->integer(10)->unsigned()->notNull()->defaultValue(0)
-                ->comment('类型 0-公众号吸粉 1-表单 2-会议'),
-            'mission' => 'json(1024) NULL COMMENT "json格式 任务阶级"',
-            'notification' => 'json(1024) NULL  COMMENT "json格式 文案提醒"',
-            'poster' => 'json(1024) NULL  COMMENT "json格式 海报"',
-
-//            "gmt_create" => "DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '创建时间'",
-//            "update_time" => "DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '更新时间'",
-
+            'status' => $this->tinyInteger(3)->unsigned()->notNull()->defaultValue(1)->comment('状态，0-关闭 1-启用'),
             'gmt_create' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')->notNull()->comment('创建时间'),
-            'updated_timestamp' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
-                ->notNull()->comment('更新时间'),
-            'deleted_at' => $this->timestamp()->comment('软删除时间')->defaultValue(null)->null(),
+            'gmt_modified' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')->notNull()->comment('更新时间'),
+            'deleted_at' => $this->dateTime()->comment('软删除时间')->defaultValue(null)->null(),
         ], $tableOptions);
-        $this->addPrimaryKey('fission_pk', self::TABLE_NAME, 'jing_uuid');
-        $this->createIndex('name', self::TABLE_NAME, array('name'));
-        $this->createIndex('status', self::TABLE_NAME, array('status'));
-        $this->createIndex('type', self::TABLE_NAME, array('type'));
-        $this->createIndex('start_time', self::TABLE_NAME, array('start_time'));
-        $this->createIndex('end_time', self::TABLE_NAME, array('end_time'));
+        $this->addPrimaryKey('pk_uuid', self::TABLE_NAME, 'uuid');
+        $this->createIndex('idx_category_name', self::TABLE_NAME, array('category_name'));
+        $this->createIndex('idx_status', self::TABLE_NAME, array('status'));
+        $this->createIndex('idx_deleted_at', self::TABLE_NAME, array('deleted_at'));
     }
 
     /**
