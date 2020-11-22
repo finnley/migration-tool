@@ -5,13 +5,13 @@ namespace modules\notes\migrations;
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%note_category}}`.
+ * Handles the creation of table `{{%banner}}`.
  */
-class M201119055823CreateNoteCategoryTable extends Migration implements \app\components\sharding\Sharding
+class M201120203803CreateBannerTable extends Migration implements \app\components\sharding\Sharding
 {
     use \app\components\sharding\Migration;
 
-    const TABLE_NAME = '{{%note_category}}';
+    const TABLE_NAME = '{{%banner}}';
 
     public function init()
     {
@@ -25,22 +25,17 @@ class M201119055823CreateNoteCategoryTable extends Migration implements \app\com
      */
     public function safeUp()
     {
-        $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB COMMENT="note 分类"';
+        $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB COMMENT="banner"';
         $this->createTable(self::TABLE_NAME, [
             //长度22，适当预留
             'uuid' => $this->char(36)->notNull()->comment('主键ID'),
-            'category_name' => 'VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT "" COMMENT "分类名称"',
-            'note_count' => $this->integer(11)->unsigned()->notNull()->defaultValue(0)->comment('数量'),
-            'sort' => $this->tinyInteger(4)->unsigned()->notNull()->defaultValue(0)->comment('排序'),
-            'status' => $this->tinyInteger(3)->unsigned()->notNull()->defaultValue(1)->comment('状态，0-关闭 1-启用'),
+            'name' => 'varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT "" COMMENT "Banner名称"',
+            'description' => 'varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT "" COMMENT "Banner描述"',
             'gmt_create' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')->notNull()->comment('创建时间'),
             'gmt_modified' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')->notNull()->comment('更新时间'),
             'deleted_at' => $this->dateTime()->comment('软删除时间')->defaultValue(null)->null(),
         ], $tableOptions);
         $this->addPrimaryKey('pk_uuid', self::TABLE_NAME, 'uuid');
-        $this->createIndex('idx_category_name', self::TABLE_NAME, array('category_name'));
-        $this->createIndex('idx_sort', self::TABLE_NAME, array('sort'));
-        $this->createIndex('idx_status', self::TABLE_NAME, array('status'));
         $this->createIndex('idx_deleted_at', self::TABLE_NAME, array('deleted_at'));
     }
 

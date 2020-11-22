@@ -5,5 +5,5 @@ return [
     'username' => env('NotesMysqlUsername'),
     'password' => env('NotesMysqlPassword'),
     'charset' => 'utf8mb4',
-    'tablePrefix' => env('NotesMysqlPrefix', 'cat_'),
+//    'tablePrefix' => env('NotesMysqlPrefix', 'cat_'),
 ];

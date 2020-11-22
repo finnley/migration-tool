@@ -7,7 +7,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%note_category}}`.
  */
-class M201119055823CreateNoteCategoryTable extends Migration implements \app\components\sharding\Sharding
+class M201122172656CreateNoteCategoryTable extends Migration implements \app\components\sharding\Sharding
 {
     use \app\components\sharding\Migration;
 
