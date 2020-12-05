@@ -7,7 +7,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%module}}`.
  */
-class M201205030255CreateModuleTable extends Migration implements \app\components\sharding\Sharding
+class M201205100059CreateModuleTable extends Migration implements \app\components\sharding\Sharding
 {
     use \app\components\sharding\Migration;
 
@@ -35,7 +35,7 @@ class M201205030255CreateModuleTable extends Migration implements \app\component
             'english_description' => 'VARCHAR(255)  NOT NULL DEFAULT "" COMMENT "英文介绍"',
             'icon' => 'VARCHAR(255) NOT NULL DEFAULT "" COMMENT "image path,icon"',
             'cover_image' => 'VARCHAR(255) NOT NULL DEFAULT "" COMMENT "封面图"',
-            'new_feature_deadline' => $this->timestamp()->notNull()->comment('新模块截止日期'),
+            'new_feature_deadline' => $this->integer(10)->unsigned()->defaultValue(0)->notNull()->comment('新模块截止日期'),
             'landing_page_url' => 'VARCHAR(255) NOT NULL DEFAULT "" COMMENT "跳转页面 url"',
             'state' => $this->tinyInteger(4)->unsigned()->notNull()->defaultValue(1)->comment('状态，0-关闭 1-启用'),
             'sort' => $this->integer(10)->unsigned()->defaultValue(0)->notNull()->comment('排序'),
