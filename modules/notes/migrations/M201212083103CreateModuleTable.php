@@ -7,7 +7,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%module}}`.
  */
-class M201205100059CreateModuleTable extends Migration implements \app\components\sharding\Sharding
+class M201212083103CreateModuleTable extends Migration implements \app\components\sharding\Sharding
 {
     use \app\components\sharding\Migration;
 
@@ -27,17 +27,17 @@ class M201205100059CreateModuleTable extends Migration implements \app\component
     {
         $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB COMMENT="模块"';
         $this->createTable(self::TABLE_NAME, [
-            //长度22，适当预留
+            //长度36，适当预留
             'uuid' => $this->char(36)->notNull()->comment('主键ID'),
-            'name' => 'VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT "" COMMENT "模块名称"',
+            'name' => 'VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT "" COMMENT "名称"',
             'english_name' => 'VARCHAR(255) NOT NULL DEFAULT "" COMMENT "英文名称"',
-            'description' => 'VARCHAR(255) NOT NULL DEFAULT "" COMMENT "功能介绍"',
+            'description' => 'VARCHAR(255) NOT NULL DEFAULT "" COMMENT "介绍"',
             'english_description' => 'VARCHAR(255)  NOT NULL DEFAULT "" COMMENT "英文介绍"',
             'icon' => 'VARCHAR(255) NOT NULL DEFAULT "" COMMENT "image path,icon"',
-            'cover_image' => 'VARCHAR(255) NOT NULL DEFAULT "" COMMENT "封面图"',
+            'cover' => 'VARCHAR(255) NOT NULL DEFAULT "" COMMENT "封面"',
             'new_feature_deadline' => $this->integer(10)->unsigned()->defaultValue(0)->notNull()->comment('新模块截止日期'),
             'landing_page_url' => 'VARCHAR(255) NOT NULL DEFAULT "" COMMENT "跳转页面 url"',
-            'state' => $this->tinyInteger(4)->unsigned()->notNull()->defaultValue(1)->comment('状态，0-关闭 1-启用'),
+            'status' => $this->tinyInteger(4)->unsigned()->notNull()->defaultValue(1)->comment('状态，0-关闭 1-启用'),
             'sort' => $this->integer(10)->unsigned()->defaultValue(0)->notNull()->comment('排序'),
             'gmt_create' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')->notNull()->comment('创建时间'),
             'gmt_modified' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')->notNull()->comment('更新时间'),
@@ -46,7 +46,7 @@ class M201205100059CreateModuleTable extends Migration implements \app\component
         $this->addPrimaryKey('pk_uuid', self::TABLE_NAME, 'uuid');
         $this->createIndex('idx_deleted_at', self::TABLE_NAME, array('deleted_at'));
         $this->createIndex('idx_name', self::TABLE_NAME, array('name'));
-        $this->createIndex('idx_state', self::TABLE_NAME, array('state'));
+        $this->createIndex('idx_status', self::TABLE_NAME, array('status'));
         $this->createIndex('idx_sort', self::TABLE_NAME, array('sort'));
     }
 
